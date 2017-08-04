@@ -21,10 +21,10 @@ MonoBehaviour:
     y: 30
     width: 2560
     height: 1271
-  m_MinSize: {x: 681, y: 442}
+  m_MinSize: {x: 681, y: 421}
   m_MaxSize: {x: 18004, y: 14021}
   vertical: 0
-  controlID: 6790
+  controlID: 7950
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -154,7 +154,7 @@ MonoBehaviour:
     height: 1250
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
+    m_SelectedIDs: 9e2f0000
     m_LastClickedID: 0
     m_ExpandedIDs: 16f7ffffd4fbffffdefbffff00000000
     m_RenameOverlay:
@@ -199,10 +199,10 @@ MonoBehaviour:
     y: 0
     width: 1582
     height: 1271
-  m_MinSize: {x: 204, y: 442}
-  m_MaxSize: {x: 4004, y: 8042}
+  m_MinSize: {x: 204, y: 421}
+  m_MaxSize: {x: 4004, y: 8021}
   vertical: 1
-  controlID: 6791
+  controlID: 7951
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -333,10 +333,10 @@ MonoBehaviour:
     m_KeySerializationHelper: []
     m_ValueSerializationHelper: []
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 3b7ee88b96c8148bd9754238bc9c3f35,
+  m_AnimatorController: {fileID: 9100000, guid: 3d3ed66dcf0dc4a5c8cfd217757bd0d4,
     type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: 1107448358105264332, guid: 3b7ee88b96c8148bd9754238bc9c3f35,
+  - m_Target: {fileID: 1107954286619188644, guid: 3d3ed66dcf0dc4a5c8cfd217757bd0d4,
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
@@ -368,8 +368,8 @@ MonoBehaviour:
     y: 516
     width: 1582
     height: 755
-  m_MinSize: {x: 204, y: 221}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_MinSize: {x: 277, y: 321}
   m_MaxSize: {x: 10000, y: 14021}
   vertical: 1
-  controlID: 6870
+  controlID: 7995
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -519,18 +519,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets
+  - Assets/Scripts
   m_LastFoldersGridSize: 16
   m_LastProjectPath: /Users/jerome.byrne/git/DinerDashDeath
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 98240000
-    m_LastClickedID: 9368
+    m_SelectedIDs: 9a2f0000
+    m_LastClickedID: 12186
     m_ExpandedIDs: 000000009824000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -584,8 +584,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: da3ffeff
-    m_LastClickedInstanceID: -114726
+    m_SelectedInstanceIDs: 9e2f0000
+    m_LastClickedInstanceID: 12190
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 4a2a0000d226000000000000b8f1ffffee2c0000de2c000086340000942800001e4d0000da4e0000
     m_RenameOverlay:
@@ -603,7 +603,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 13}
+      m_ClientGUIView: {fileID: 0}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0

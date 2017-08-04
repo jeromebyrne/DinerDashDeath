@@ -4,6 +4,8 @@
 /DinerDashDeath/[Bb]uild/
 /DinerDashDeath/[Bb]uilds/
 /DinerDashDeath/Assets/AssetStoreTools*
+/Temp/
+/Library/
 
 # Visual Studio 2015 cache directory
 /DashTown_prototype/.vs/
