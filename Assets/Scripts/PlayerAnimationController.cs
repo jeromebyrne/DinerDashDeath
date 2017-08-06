@@ -6,15 +6,15 @@ using Spine.Unity;
 
 public class PlayerAnimationController : MonoBehaviour {
 
-    public Player player = null;
     private CharacterMovement playerMovement = null;
     public SkeletonAnimation skeletonAnimation = null;
 
 	// Use this for initialization
 	void Start ()
     {
-        playerMovement = player.gameObject.GetComponent<CharacterMovement>();
-	}
+        playerMovement = gameObject.GetComponent<CharacterMovement>();
+        skeletonAnimation = gameObject.GetComponent<SkeletonAnimation>();
+    }
 	
 	// Update is called once per frame
 	void Update ()

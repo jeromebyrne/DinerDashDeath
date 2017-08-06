@@ -5,7 +5,9 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     public Camera m_Camera;
-    public Player m_Player;
+    public CharacterMovement playerMovement = null;
+    private float cameraSpeed = 2.5f;
+    private const float kPlayerOffset = 5.0f;
 
     private Vector3 startingPos = new Vector3();
 
@@ -15,19 +17,23 @@ public class CameraControl : MonoBehaviour
         startingPos = gameObject.transform.position;
     }
 
-    public void SetPlayer(Player player)
+    public void SetPlayer(CharacterMovement player)
     {
-        m_Player = player;
+        playerMovement = player;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (m_Player)
+        if (playerMovement)
         {
-            //Vector3 newPos = new Vector3(m_Player.transform.position.x, m_Camera.transform.position.y, m_Camera.transform.position.z);
-            Vector3 newPos = new Vector3(m_Player.transform.position.x, startingPos.y /*m_Player.transform.position.y + 5.0f*/, m_Camera.transform.position.z);
-            m_Camera.transform.position = newPos;
+            var lastPos = m_Camera.transform.position;
+
+            Vector3 newPos = new Vector3(playerMovement.transform.position.x + (playerMovement.GetIntendedDirectionX() * kPlayerOffset),
+                                        startingPos.y,
+                                        m_Camera.transform.position.z);
+
+            m_Camera.transform.position = Vector3.Lerp(lastPos, newPos, TimeManager.GetInstance().GetTimeDelta() * cameraSpeed);
         }
     }
 }

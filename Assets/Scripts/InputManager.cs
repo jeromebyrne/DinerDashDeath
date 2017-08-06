@@ -30,7 +30,8 @@ public class InputManager : MonoBehaviour {
             playerMovement.acceleratingX = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) ||
+            Input.GetKeyDown(KeyCode.W))
         {
             playerMovement.Jump();
         }

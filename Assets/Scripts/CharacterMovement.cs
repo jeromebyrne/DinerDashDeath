@@ -23,6 +23,11 @@ public class CharacterMovement : MonoBehaviour
     public Text velXText = null;
     public Text velYText = null;
 
+    public float GetIntendedDirectionX()
+    {
+        return intendedDirectionX;
+    }
+
     public float GetCurrentVelocityX()
     {
         return currentVelocity.x;
@@ -77,7 +82,7 @@ public class CharacterMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float timeDelta = TimeManager.GetInstance().GetTimeDelta();
 
