@@ -1,0 +1,111 @@
+
+gunflo.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+gunflo/gunflo_arm_1
+  rotate: true
+  xy: 275, 108
+  size: 59, 127
+  orig: 59, 127
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_arm_2
+  rotate: true
+  xy: 275, 51
+  size: 55, 130
+  orig: 55, 130
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_calf
+  rotate: true
+  xy: 404, 112
+  size: 63, 207
+  orig: 63, 207
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_forearm
+  rotate: true
+  xy: 132, 26
+  size: 26, 103
+  orig: 26, 103
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_front_shoe
+  rotate: false
+  xy: 2, 2
+  size: 128, 50
+  orig: 128, 50
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_grenade
+  rotate: true
+  xy: 407, 53
+  size: 57, 72
+  orig: 57, 72
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_hair_1
+  rotate: false
+  xy: 839, 47
+  size: 133, 203
+  orig: 133, 203
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_hand_1
+  rotate: false
+  xy: 974, 96
+  size: 46, 46
+  orig: 46, 46
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_hand_2
+  rotate: false
+  xy: 481, 59
+  size: 44, 51
+  orig: 44, 51
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_hand_3
+  rotate: false
+  xy: 527, 79
+  size: 62, 31
+  orig: 62, 31
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_head
+  rotate: true
+  xy: 627, 58
+  size: 192, 210
+  orig: 192, 210
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_leg
+  rotate: true
+  xy: 404, 177
+  size: 73, 221
+  orig: 73, 221
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_shotgun
+  rotate: false
+  xy: 2, 169
+  size: 400, 81
+  orig: 400, 81
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_shotgun_pump
+  rotate: true
+  xy: 974, 144
+  size: 106, 25
+  orig: 106, 25
+  offset: 0, 0
+  index: -1
+gunflo/gunflo_torso
+  rotate: true
+  xy: 2, 54
+  size: 113, 271
+  orig: 113, 271
+  offset: 0, 0
+  index: -1
