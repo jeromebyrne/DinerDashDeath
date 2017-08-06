@@ -7,7 +7,6 @@ public class InputManager : MonoBehaviour {
     const string kHorizontalAxis = "Horizontal";
     const string kVerticalAxis = "Vertical";
     const float kPlayerMoveX = 1.0f;
-    private bool pressingJump = false;
 
     public CharacterMovement playerMovement = null;
 
@@ -29,18 +28,19 @@ public class InputManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             playerMovement.Jump();
-            /*
-            if (!pressingJump)
-            {
-                playerMovement.Jump();
-            }
-
-            pressingJump = true;
-            */
+        }
+        
+        if (Input.GetKey(KeyCode.Q))
+        {
+            TimeManager.GetInstance().SetCurrentTimescale(0.25f);
+        }
+        else if (Input.GetKey(KeyCode.E))
+        {
+            TimeManager.GetInstance().SetCurrentTimescale(2.0f);
         }
         else
         {
-            //pressingJump = false;
+            TimeManager.GetInstance().SetCurrentTimescale(1.0f);
         }
     }
 }

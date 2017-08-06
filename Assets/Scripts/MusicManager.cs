@@ -28,13 +28,25 @@ public class MusicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_AudioSourceCurrentMusic && !m_AudioSourceCurrentMusic.isPlaying)
+        if (m_AudioSourceCurrentMusic)
         {
-            currentTimeBetweenSongs -= Time.deltaTime;
-
-            if (currentTimeBetweenSongs <= 0.0f)
+            if (!m_AudioSourceCurrentMusic.isPlaying)
             {
-                PlayNextLevelMusic();
+                currentTimeBetweenSongs -= Time.deltaTime;
+
+                if (currentTimeBetweenSongs <= 0.0f)
+                {
+                    PlayNextLevelMusic();
+                }
+            }
+            else
+            {
+                float currentTimeScale = TimeManager.GetInstance().GetCurrentTimescale();
+
+                if (m_AudioSourceCurrentMusic.pitch != currentTimeScale)
+                {
+                    m_AudioSourceCurrentMusic.pitch = currentTimeScale;
+                }
             }
         }
     }

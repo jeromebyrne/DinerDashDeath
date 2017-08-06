@@ -41,15 +41,17 @@ public class CharacterMovement : MonoBehaviour
                                                         startingScale.y,
                                                         startingScale.z);
 
-        float newVelX = currentVelocity.x + (deltaX * Time.deltaTime);
+        float newVelX = currentVelocity.x + (deltaX * TimeManager.GetInstance().GetTimeDelta());
 
-        if (newVelX > maxVelocity.x)
+        float currentTimeScale = TimeManager.GetInstance().GetCurrentTimescale();
+
+        if (newVelX > (maxVelocity.x * currentTimeScale))
         {
-            newVelX = maxVelocity.x;
+            newVelX = maxVelocity.x * currentTimeScale;
         }
-        else if (newVelX < -maxVelocity.x)
+        else if (newVelX < (-maxVelocity.x * currentTimeScale))
         {
-            newVelX = -maxVelocity.x;
+            newVelX = -maxVelocity.x * currentTimeScale;
         }
 
         currentVelocity = new Vector2(newVelX, currentVelocity.y);
@@ -57,15 +59,17 @@ public class CharacterMovement : MonoBehaviour
 
     public void IncrementVelocityY(float deltaY)
     {
-        float newVelY = currentVelocity.y + (deltaY * Time.deltaTime);
+        float newVelY = currentVelocity.y + (deltaY * TimeManager.GetInstance().GetTimeDelta());
 
-        if (newVelY > maxVelocity.y)
+        float currentTimeScale = TimeManager.GetInstance().GetCurrentTimescale();
+
+        if (newVelY > (maxVelocity.y * currentTimeScale))
         {
-            newVelY = maxVelocity.y;
+            newVelY = maxVelocity.y * currentTimeScale;
         }
-        else if (newVelY < -maxVelocity.y)
+        else if (newVelY < (-maxVelocity.y * currentTimeScale))
         {
-            newVelY = -maxVelocity.y;
+            newVelY = -maxVelocity.y * currentTimeScale;
         }
 
         currentVelocity = new Vector2(currentVelocity.x, newVelY);
@@ -74,17 +78,19 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lastJumped += Time.deltaTime;
+        float timeDelta = TimeManager.GetInstance().GetTimeDelta();
+
+        lastJumped += timeDelta;
 
         if (isGrounded)
         {
-            timeGrounded += Time.deltaTime;
+            timeGrounded += timeDelta;
             lastGrounded = 0.0f;
         }
         else
         {
             timeGrounded = 0.0f;
-            lastGrounded += Time.deltaTime;
+            lastGrounded += timeDelta;
         }
 
         gameObject.transform.position = new Vector3(gameObject.transform.position.x + currentVelocity.x, 
@@ -101,9 +107,11 @@ public class CharacterMovement : MonoBehaviour
     {
         Vector2 newVelocity = currentVelocity;
 
+        float timeDelta = TimeManager.GetInstance().GetTimeDelta();
+
         if (currentVelocity.x > 0)
         {
-            newVelocity.x = currentVelocity.x - (resistance.x * Time.deltaTime);
+            newVelocity.x = currentVelocity.x - (resistance.x * timeDelta);
 
             if (newVelocity.x < 0.0f)
             {
@@ -112,7 +120,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
-            newVelocity.x = currentVelocity.x + (resistance.x * Time.deltaTime);
+            newVelocity.x = currentVelocity.x + (resistance.x * timeDelta);
 
             if (newVelocity.x > 0.0f)
             {
@@ -129,7 +137,9 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
-            newVelocity.y = currentVelocity.y - (resistance.y * Time.deltaTime);
+            float currentTimeScale = TimeManager.GetInstance().GetCurrentTimescale();
+
+            newVelocity.y = currentVelocity.y - (resistance.y * timeDelta * currentTimeScale);
         }
 
         currentVelocity = newVelocity;

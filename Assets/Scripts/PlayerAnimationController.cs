@@ -19,6 +19,8 @@ public class PlayerAnimationController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        skeletonAnimation.timeScale = TimeManager.GetInstance().GetCurrentTimescale();
+
         TrackEntry trackEntry = skeletonAnimation.AnimationState.GetCurrent(0);
 
         if (System.Math.Abs(playerMovement.GetCurrentVelocityX()) > 0.0f)
