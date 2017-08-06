@@ -6,15 +6,14 @@ public class InputManager : MonoBehaviour {
 
     const string kHorizontalAxis = "Horizontal";
     const string kVerticalAxis = "Vertical";
-
     const float kPlayerMoveX = 1.0f;
+    private bool pressingJump = false;
 
     public CharacterMovement playerMovement = null;
 
 	// Use this for initialization
 	void Start ()
     {
-		
 	}
 	
 	// Update is called once per frame
@@ -27,9 +26,21 @@ public class InputManager : MonoBehaviour {
             playerMovement.IncrementVelocityX(deltaMove);
         }
 
-        if (Input.GetAxis(kVerticalAxis) > 0)
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             playerMovement.Jump();
+            /*
+            if (!pressingJump)
+            {
+                playerMovement.Jump();
+            }
+
+            pressingJump = true;
+            */
+        }
+        else
+        {
+            //pressingJump = false;
         }
     }
 }
