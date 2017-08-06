@@ -27,9 +27,9 @@ public class PlayerAnimationController : MonoBehaviour {
         {
             percentSpeed = 1.0f;
         }
-        else if (percentSpeed < 0.50f)
+        else if (percentSpeed < 0.40f)
         {
-            percentSpeed = 0.5f;
+            percentSpeed = 0.4f;
         }
 
         skeletonAnimation.timeScale = animTimeScale * percentSpeed;

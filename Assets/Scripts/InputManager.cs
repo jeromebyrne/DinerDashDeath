@@ -23,6 +23,11 @@ public class InputManager : MonoBehaviour {
         if (deltaMove != 0.0f)
         {
             playerMovement.IncrementVelocityX(deltaMove);
+            playerMovement.acceleratingX = true;
+        }
+        else
+        {
+            playerMovement.acceleratingX = false;
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))

@@ -13,6 +13,7 @@ public class CharacterMovement : MonoBehaviour
     public Vector2 maxVelocity = new Vector2(10.0f, 10.0f);
     public Vector2 resistance = new Vector2(1.0f, 1.0f);
     private Vector3 startingScale = new Vector2(1.0f, 1.0f);
+    public bool acceleratingX = false;
 
     float lastJumped = 0.0f;
     float timeGrounded = 0.0f;
@@ -109,22 +110,25 @@ public class CharacterMovement : MonoBehaviour
 
         float timeDelta = TimeManager.GetInstance().GetTimeDelta();
 
-        if (currentVelocity.x > 0)
+        if (!acceleratingX)
         {
-            newVelocity.x = currentVelocity.x - (resistance.x * timeDelta);
-
-            if (newVelocity.x < 0.0f)
+            if (currentVelocity.x > 0)
             {
-                newVelocity.x = 0.0f;
+                newVelocity.x = currentVelocity.x - (resistance.x * timeDelta);
+
+                if (newVelocity.x < 0.0f)
+                {
+                    newVelocity.x = 0.0f;
+                }
             }
-        }
-        else
-        {
-            newVelocity.x = currentVelocity.x + (resistance.x * timeDelta);
-
-            if (newVelocity.x > 0.0f)
+            else
             {
-                newVelocity.x = 0.0f;
+                newVelocity.x = currentVelocity.x + (resistance.x * timeDelta);
+
+                if (newVelocity.x > 0.0f)
+                {
+                    newVelocity.x = 0.0f;
+                }
             }
         }
 
