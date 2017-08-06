@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour {
+public class TimeManager {
 
     float currentTimeScale = 2.0f;
 
@@ -27,16 +27,4 @@ public class TimeManager : MonoBehaviour {
     {
         return Time.deltaTime * currentTimeScale;
     }
-
-	// Use this for initialization
-	void Start ()
-    {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 }

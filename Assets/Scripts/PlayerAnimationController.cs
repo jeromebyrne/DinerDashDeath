@@ -19,22 +19,38 @@ public class PlayerAnimationController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        skeletonAnimation.timeScale = TimeManager.GetInstance().GetCurrentTimescale();
+        float animTimeScale = TimeManager.GetInstance().GetCurrentTimescale();
+
+        float percentSpeed = animTimeScale == 1.0f ? Mathf.Abs(playerMovement.GetCurrentVelocityX() / playerMovement.maxVelocity.x) : 1.0f;
+
+        if (percentSpeed == 0.0f)
+        {
+            percentSpeed = 1.0f;
+        }
+        else if (percentSpeed < 0.50f)
+        {
+            percentSpeed = 0.5f;
+        }
+
+        skeletonAnimation.timeScale = animTimeScale * percentSpeed;
 
         TrackEntry trackEntry = skeletonAnimation.AnimationState.GetCurrent(0);
 
-        if (System.Math.Abs(playerMovement.GetCurrentVelocityX()) > 0.0f)
+        if (trackEntry != null)
         {
-            if (trackEntry.Animation.Name != "run")
+            if (System.Math.Abs(playerMovement.GetCurrentVelocityX()) > 0.0f)
             {
-                PlayAnimation("run", true);
+                if (trackEntry.Animation.Name != "run")
+                {
+                    PlayAnimation("run", true);
+                }
             }
-        }
-        else
-        {
-            if (trackEntry.Animation.Name != "idle1")
+            else
             {
-                PlayAnimation("idle1", true);
+                if (trackEntry.Animation.Name != "idle1")
+                {
+                    PlayAnimation("idle1", true);
+                }
             }
         }
     }

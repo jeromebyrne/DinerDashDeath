@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterMovement : MonoBehaviour
 {
-    const float kJumpDelta = 15.0f;
+    const float kJumpAmount = 0.25f;
 
     private Vector2 currentVelocity = new Vector2();
     private float intendedDirectionX = 1.0f;
@@ -161,7 +161,7 @@ public class CharacterMovement : MonoBehaviour
         {
             lastJumped = 0.0f;
 
-            IncrementVelocityY(kJumpDelta);
+            currentVelocity = new Vector2(currentVelocity.x, kJumpAmount * TimeManager.GetInstance().GetCurrentTimescale());
         }
     }
 
