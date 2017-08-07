@@ -6,7 +6,7 @@ using Spine.Unity;
 
 public class CharacterMovement : MonoBehaviour
 {
-    const float kJumpAmount = 0.8f;
+    const float kJumpAmount = 1.0f;
 
     private Vector2 currentVelocity = new Vector2();
     private float intendedDirectionX = 1.0f;
@@ -31,6 +31,16 @@ public class CharacterMovement : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+    }
+
+    public float GetTimeGrounded()
+    {
+        return timeGrounded;
+    }
+
+    public float GetLastTimeGrounded()
+    {
+        return lastGrounded;
     }
 
     public float GetIntendedDirectionX()

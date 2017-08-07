@@ -49,9 +49,21 @@ public class PlayerAnimationController : MonoBehaviour {
             {
                 if (System.Math.Abs(playerMovement.GetCurrentVelocityX()) > 0.0f)
                 {
-                    if (trackEntry.Animation.Name != "run")
+                    bool runBack = playerMovement.GetIntendedDirectionX() != aimDirection;
+
+                    if (runBack)
                     {
-                        PlayAnimation("run", true);
+                        if (trackEntry.Animation.Name != "run_back")
+                        {
+                            PlayAnimation("run_back", true);
+                        }
+                    }
+                    else
+                    {
+                        if (trackEntry.Animation.Name != "run")
+                        {
+                            PlayAnimation("run", true);
+                        }
                     }
                 }
                 else
@@ -62,7 +74,13 @@ public class PlayerAnimationController : MonoBehaviour {
                     }
                 }
             }
-            
+            else if (playerMovement.GetLastTimeGrounded() > 0.05f)
+            {
+                if (trackEntry.Animation.Name != "jump")
+                {
+                    PlayAnimation("jump", false);
+                }
+            }
         }
     }
 

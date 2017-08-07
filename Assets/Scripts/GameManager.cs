@@ -10,12 +10,14 @@ public class GameManager : MonoBehaviour {
     public GameObject camera = null;
     public GameObject gunTarget = null;
     private PlayerAnimationController playerAnim = null;
+    private CharacterMovement playerMovement = null;
 
 	// Use this for initialization
 	void Start ()
     {
         Cursor.visible = false;
         playerAnim = player.GetComponent<PlayerAnimationController>();
+        playerMovement = player.GetComponent<CharacterMovement>();
         SwitchLevel("Prefabs/level1");
     }
 
@@ -109,6 +111,7 @@ public class GameManager : MonoBehaviour {
         else
         {
             gunTarget.SetActive(false);
+            playerAnim.aimDirection = playerMovement.GetIntendedDirectionX();
         }
         
     }
