@@ -6,7 +6,6 @@ public class MusicManager : MonoBehaviour
 {
     private const float kTimeBetweenSongs = 10.0f;
 
-    private int m_CurrentMenuMusicIndex = -1;
     private int m_CurrentLevelMusicIndex = -1;
 
     public AudioClip[] m_LevelMusic;
@@ -14,6 +13,8 @@ public class MusicManager : MonoBehaviour
     private AudioSource m_AudioSourceCurrentMusic;
 
     private float currentTimeBetweenSongs = kTimeBetweenSongs;
+
+    private int currentLoopIndex = 0;
 
     // Use this for initialization
     void Start()
@@ -32,11 +33,20 @@ public class MusicManager : MonoBehaviour
         {
             if (!m_AudioSourceCurrentMusic.isPlaying)
             {
-                currentTimeBetweenSongs -= Time.deltaTime;
-
-                if (currentTimeBetweenSongs <= 0.0f)
+                if (currentLoopIndex < 2)
                 {
-                    PlayNextLevelMusic();
+                    currentLoopIndex++;
+
+                    m_AudioSourceCurrentMusic.Play();
+                }
+                else
+                {
+                    currentTimeBetweenSongs -= Time.deltaTime;
+
+                    if (currentTimeBetweenSongs <= 0.0f)
+                    {
+                        PlayNextLevelMusic();
+                    }
                 }
             }
             else
@@ -54,6 +64,7 @@ public class MusicManager : MonoBehaviour
     public void PlayNextLevelMusic()
     {
         ++m_CurrentLevelMusicIndex;
+        currentLoopIndex = 0;
 
         if (m_CurrentLevelMusicIndex > m_LevelMusic.Length - 1)
         {

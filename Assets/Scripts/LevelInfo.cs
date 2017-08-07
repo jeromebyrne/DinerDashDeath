@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class LevelInfo : MonoBehaviour {
+
+    public GameObject playerSpawn = null;
 
 	// Use this for initialization
-	void Start ()
-    {
+	void Start () {
 		
 	}
 	

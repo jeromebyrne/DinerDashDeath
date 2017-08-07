@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine.Unity;
 
 public class CharacterMovement : MonoBehaviour
 {
-    const float kJumpAmount = 0.25f;
+    const float kJumpAmount = 0.8f;
 
     private Vector2 currentVelocity = new Vector2();
     private float intendedDirectionX = 1.0f;
@@ -14,6 +15,11 @@ public class CharacterMovement : MonoBehaviour
     public Vector2 resistance = new Vector2(1.0f, 1.0f);
     private Vector3 startingScale = new Vector2(1.0f, 1.0f);
     public bool acceleratingX = false;
+    public AudioClip footstepClip = null;
+    private AudioSource footstepSource = null;
+
+    [SpineEvent]
+    public string footstepEventName = "Footstep";
 
     float lastJumped = 0.0f;
     float timeGrounded = 0.0f;
@@ -37,6 +43,17 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         startingScale = gameObject.transform.localScale;
+
+        footstepSource = gameObject.AddComponent<AudioSource>();
+
+        footstepSource.clip = footstepClip;
+
+        SkeletonAnimation skelAnim = gameObject.GetComponent<SkeletonAnimation>();
+
+        if (skelAnim != null)
+        {
+            skelAnim.AnimationState.Event += HandleEvent;
+        }
     }
 
     public void IncrementVelocityX(float deltaX)
@@ -204,4 +221,18 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    void HandleEvent(Spine.TrackEntry trackEntry, Spine.Event e)
+    {
+        if (e.Data.Name == footstepEventName)
+        {
+            footstepSource.Stop();
+            footstepSource.pitch = GetRandomPitch(0.2f);
+            footstepSource.Play();
+        }
+    }
+
+    static float GetRandomPitch(float maxOffset)
+    {
+        return 1f + Random.Range(-maxOffset, maxOffset);
+    }
 }

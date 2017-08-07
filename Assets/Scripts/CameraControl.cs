@@ -6,8 +6,8 @@ public class CameraControl : MonoBehaviour
 {
     public Camera m_Camera;
     public CharacterMovement playerMovement = null;
-    private float cameraSpeed = 2.5f;
-    private const float kPlayerOffset = 5.0f;
+    private float cameraSpeed = 2.75f;
+    private const float kPlayerOffset = 12.0f;
 
     private Vector3 startingPos = new Vector3();
 

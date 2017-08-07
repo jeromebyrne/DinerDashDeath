@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour {
 
     const string kHorizontalAxis = "Horizontal";
     const string kVerticalAxis = "Vertical";
-    const float kPlayerMoveX = 1.0f;
+    const float kPlayerMoveX = 4.0f;
 
     public CharacterMovement playerMovement = null;
 
@@ -38,7 +38,7 @@ public class InputManager : MonoBehaviour {
         
         if (Input.GetKey(KeyCode.Q))
         {
-            TimeManager.GetInstance().SetCurrentTimescale(0.25f);
+            TimeManager.GetInstance().SetCurrentTimescale(0.1f);
         }
         else if (Input.GetKey(KeyCode.E))
         {
