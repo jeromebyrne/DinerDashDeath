@@ -13,7 +13,6 @@ public class CharacterMovement : MonoBehaviour
     private bool isGrounded = false;
     public Vector2 maxVelocity = new Vector2(10.0f, 10.0f);
     public Vector2 resistance = new Vector2(1.0f, 1.0f);
-    private Vector3 startingScale = new Vector2(1.0f, 1.0f);
     public bool acceleratingX = false;
     public AudioClip footstepClip = null;
     private AudioSource footstepSource = null;
@@ -29,6 +28,11 @@ public class CharacterMovement : MonoBehaviour
     public Text velXText = null;
     public Text velYText = null;
 
+    public bool IsGrounded()
+    {
+        return isGrounded;
+    }
+
     public float GetIntendedDirectionX()
     {
         return intendedDirectionX;
@@ -42,8 +46,6 @@ public class CharacterMovement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        startingScale = gameObject.transform.localScale;
-
         footstepSource = gameObject.AddComponent<AudioSource>();
 
         footstepSource.clip = footstepClip;
@@ -59,10 +61,6 @@ public class CharacterMovement : MonoBehaviour
     public void IncrementVelocityX(float deltaX)
     {
         intendedDirectionX = deltaX >= 0.0f ? 1.0f : -1.0f;
-
-        gameObject.transform.localScale = new Vector3(startingScale.x * intendedDirectionX,
-                                                        startingScale.y,
-                                                        startingScale.z);
 
         float newVelX = currentVelocity.x + (deltaX * TimeManager.GetInstance().GetTimeDelta());
 

@@ -8,10 +8,13 @@ public class PlayerAnimationController : MonoBehaviour {
 
     private CharacterMovement playerMovement = null;
     public SkeletonAnimation skeletonAnimation = null;
+    private Vector3 startingScale = new Vector2(1.0f, 1.0f);
+    public float aimDirection = 1.0f;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
+        startingScale = gameObject.transform.localScale;
         playerMovement = gameObject.GetComponent<CharacterMovement>();
         skeletonAnimation = gameObject.GetComponent<SkeletonAnimation>();
     }
@@ -20,6 +23,10 @@ public class PlayerAnimationController : MonoBehaviour {
 	void Update ()
     {
         float animTimeScale = TimeManager.GetInstance().GetCurrentTimescale();
+
+        gameObject.transform.localScale = new Vector3(startingScale.x * aimDirection,
+                                                        startingScale.y,
+                                                        startingScale.z);
 
         float percentSpeed = animTimeScale == 1.0f ? Mathf.Abs(playerMovement.GetCurrentVelocityX() / playerMovement.maxVelocity.x) : 1.0f;
 
@@ -38,20 +45,24 @@ public class PlayerAnimationController : MonoBehaviour {
 
         if (trackEntry != null)
         {
-            if (System.Math.Abs(playerMovement.GetCurrentVelocityX()) > 0.0f)
+            if (playerMovement.IsGrounded())
             {
-                if (trackEntry.Animation.Name != "run")
+                if (System.Math.Abs(playerMovement.GetCurrentVelocityX()) > 0.0f)
                 {
-                    PlayAnimation("run", true);
+                    if (trackEntry.Animation.Name != "run")
+                    {
+                        PlayAnimation("run", true);
+                    }
+                }
+                else
+                {
+                    if (trackEntry.Animation.Name != "idle1")
+                    {
+                        PlayAnimation("idle1", true);
+                    }
                 }
             }
-            else
-            {
-                if (trackEntry.Animation.Name != "idle1")
-                {
-                    PlayAnimation("idle1", true);
-                }
-            }
+            
         }
     }
 
