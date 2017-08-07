@@ -6,7 +6,7 @@ using Spine.Unity;
 
 public class CharacterMovement : MonoBehaviour
 {
-    const float kJumpAmount = 1.0f;
+    const float kJumpAmount = 0.5f;
 
     private Vector2 currentVelocity = new Vector2();
     private float intendedDirectionX = 1.0f;

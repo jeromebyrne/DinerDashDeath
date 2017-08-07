@@ -6,8 +6,9 @@ public class CameraControl : MonoBehaviour
 {
     public Camera m_Camera;
     public CharacterMovement playerMovement = null;
-    private float cameraSpeed = 2.75f;
-    private const float kPlayerOffset = 12.0f;
+    private PlayerAnimationController playerAnim = null;
+    private float cameraSpeed = 1.35f;
+    private const float kPlayerOffset = 6.0f;
 
     private Vector3 startingPos = new Vector3();
 
@@ -15,6 +16,8 @@ public class CameraControl : MonoBehaviour
     void Start()
     {
         startingPos = gameObject.transform.position;
+
+        playerAnim = playerMovement.gameObject.GetComponent<PlayerAnimationController>();
     }
 
     public void SetPlayer(CharacterMovement player)
@@ -29,7 +32,7 @@ public class CameraControl : MonoBehaviour
         {
             var lastPos = m_Camera.transform.position;
 
-            Vector3 newPos = new Vector3(playerMovement.transform.position.x + (playerMovement.GetIntendedDirectionX() * kPlayerOffset),
+            Vector3 newPos = new Vector3(playerMovement.transform.position.x + (playerAnim.aimDirection * kPlayerOffset),
                                         startingPos.y,
                                         m_Camera.transform.position.z);
 

@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour {
 
     const string kHorizontalAxis = "Horizontal";
     const string kVerticalAxis = "Vertical";
-    const float kPlayerMoveX = 4.0f;
+    const float kPlayerMoveX = 2.0f;
 
     public CharacterMovement playerMovement = null;
 
