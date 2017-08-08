@@ -20,10 +20,14 @@ public class GameManager : MonoBehaviour {
     public AudioClip shotgunReloadClip = null;
     private AudioSource shotgunReloadSource = null;
 
+    public AudioClip bloodSplashClip = null;
+    private AudioSource bloodSplashSource = null;
+
     private Vector3 gunTargetRegularScale = new Vector3(0.75f, 0.75f, 1.0f);
     private Vector3 gunTargetDoubleScale = new Vector3(1.25f, 1.25f, 1.0f);
     private Color gunNotFocusedColor = new Color(1.0f, 0.0f, 0.0f);
     private Color gunFocusedColor = new Color(0.0f, 1.0f, 0.0f);
+    CameraShake cameraShake = null;
 
     float lastTimeFired = 9999.0f;
 
@@ -46,6 +50,11 @@ public class GameManager : MonoBehaviour {
         shotgunCockSource.clip = shotgunCockClip;
         shotgunReloadSource = gameObject.AddComponent<AudioSource>();
         shotgunReloadSource.clip = shotgunReloadClip;
+
+        bloodSplashSource = gameObject.AddComponent<AudioSource>();
+        bloodSplashSource.clip = bloodSplashClip;
+
+        cameraShake = Camera.main.GetComponent<CameraShake>();
 
         SwitchLevel("Prefabs/level1");
     }
@@ -146,10 +155,14 @@ public class GameManager : MonoBehaviour {
         tempVec = Camera.main.WorldToScreenPoint(new Vector3(gunBone.WorldX + player.transform.position.x, gunBone.WorldY + (player.transform.position.y), 0));
         tempVec = Input.mousePosition - tempVec;
         Vector3 direction = tempVec;
-        direction.Normalize();
-        tempRot = Mathf.Atan2(tempVec.y, tempVec.x * player.transform.localScale.x) * Mathf.Rad2Deg;
-        gunBone.Rotation = Mathf.Clamp(tempRot, LowerRotationBound, UpperRotationBound) - gunBone.parent.LocalToWorldRotation(gunBone.parent.rotation);
 
+        // if (shotReady)
+        //{
+            direction.Normalize();
+            tempRot = Mathf.Atan2(tempVec.y, tempVec.x * player.transform.localScale.x) * Mathf.Rad2Deg;
+            gunBone.Rotation = Mathf.Clamp(tempRot, LowerRotationBound, UpperRotationBound) - gunBone.parent.LocalToWorldRotation(gunBone.parent.rotation);
+        //}
+ 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = gunTarget.transform.position.z;
         gunTarget.transform.position = mousePos;
@@ -176,7 +189,7 @@ public class GameManager : MonoBehaviour {
             lastTimeFired = 0.0f;
             shotReady = false;
             playedCockedSfx = false;
-            playedReload = false; 
+            playedReload = false;
 
             // shotgun sfx 
             {
@@ -194,12 +207,15 @@ public class GameManager : MonoBehaviour {
                                                             gunBone.WorldY + (player.transform.position.y)),
                                                             direction);
 
+            bool personHit = false;
             if (hit.collider != null)
             {
                 CharacterHealth characterHealth = hit.collider.gameObject.GetComponent<CharacterHealth>();
 
                 if (characterHealth)
                 {
+                    personHit = true;
+
                     characterHealth.ChangeHealth(-100.0f);
 
                     var bloodBurst = characterHealth.bloodBurst;
@@ -207,14 +223,47 @@ public class GameManager : MonoBehaviour {
                     if (bloodBurst)
                     {
                         bloodBurst.Stop();
+
+                        // particle velocity
+                        {
+                            //ParticleSystem.Particle[] p = new ParticleSystem.Particle[bloodBurst.particleCount + 1];
+                            //int l = bloodBurst.GetParticles(p);
+
+                            //int i = 0;
+                            //while (i < l)
+                            //{
+                            //    p[i].velocity = new Vector3(direction.x * 20.0f, direction.y * 20.0f/*p[i].remainingLifetime / p[i].startLifetime * 10F*/, 0);
+                            //    i++;
+                            //}
+
+                            //bloodBurst.SetParticles(p, l);
+                        }
+
                         bloodBurst.transform.position = new Vector3(hit.point.x, hit.point.y, bloodBurst.transform.position.z);
                         bloodBurst.Play();
                     }
+
+                    bloodSplashSource.Stop();
+                    bloodSplashSource.pitch = CharacterMovement.GetRandomPitch(0.2f) * TimeManager.GetInstance().GetCurrentTimescale();
+                    bloodSplashSource.PlayDelayed(0.05f);
                 }
             }
             if (playerCollider)
             {
                 playerCollider.enabled = true;
+            }
+
+            // camera shake
+            cameraShake.originalPos = Camera.main.transform.localPosition;
+            if (personHit)
+            {
+                cameraShake.shakeAmount = 0.5f;
+                cameraShake.shakeDuration = 0.12f;
+            }
+            else
+            {
+                cameraShake.shakeAmount = 0.2f;
+                cameraShake.shakeDuration = 0.1f;
             }
         }
     }
