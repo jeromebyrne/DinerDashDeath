@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
+using Spine.Unity.Modules;
 
 public class EnemyAnimationController : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class EnemyAnimationController : MonoBehaviour {
     private EnemyAI enemyAI = null;
     private CharacterHealth characterHealth = null;
     private bool hasPlayedDeathAnim = false;
+    public bool isInRagdollMode = false;
 
     // Use this for initialization
     void Start () {
@@ -82,10 +84,38 @@ public class EnemyAnimationController : MonoBehaviour {
             {
                 if (hasPlayedDeathAnim == false)
                 {
+                    /*
                     if (trackEntry.Animation.Name != "death")
                     {
                         PlayAnimation("death", false);
                     }
+                    else
+                    {
+                        if (!isInRagdollMode && trackEntry.IsComplete)
+                        {
+                            var ragdoll = gameObject.GetComponent<SkeletonRagdoll2D>();
+                            if (ragdoll)
+                            {
+                                ragdoll.Apply();
+                            }
+
+                            isInRagdollMode = true;
+                        }
+                    }
+                    */
+
+                    if (!isInRagdollMode)
+                    {
+                        var ragdoll = gameObject.GetComponent<SkeletonRagdoll2D>();
+                        if (ragdoll)
+                        {
+                            ragdoll.Apply();
+                        }
+
+                        isInRagdollMode = true;
+                    }
+
+                    hasPlayedDeathAnim = true;
                 }
             }
         }

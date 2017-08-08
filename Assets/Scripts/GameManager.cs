@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
     private PlayerAnimationController playerAnim = null;
     private CharacterMovement playerMovement = null;
 
-    private Vector3 gunTargetRegularScale = new Vector3(0.5f, 0.5f, 1.0f);
+    private Vector3 gunTargetRegularScale = new Vector3(0.75f, 0.75f, 1.0f);
     private Vector3 gunTargetDoubleScale = new Vector3(1.0f, 1.0f, 1.0f);
     private Color gunNotFocusedColor = new Color(1.0f, 0.7f, 0.0f);
     private Color gunFocusedColor = new Color(1.0f, 0.0f, 0.0f);
@@ -136,9 +136,6 @@ public class GameManager : MonoBehaviour {
                     {
                         bloodBurst.Stop();
                         bloodBurst.transform.position = new Vector3(hit.point.x, hit.point.y, bloodBurst.transform.position.z);
-                        /*bloodBurst.transform.position = new Vector3(hit.collider.gameObject.transform.position.x, 
-                                                                    hit.collider.gameObject.transform.position.y, 
-                                                                    bloodBurst.transform.position.z);*/
                         bloodBurst.Play();
                     }
                 }
