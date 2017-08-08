@@ -16,6 +16,8 @@ public class CharacterMovement : MonoBehaviour
     public bool acceleratingX = false;
     public AudioClip footstepClip = null;
     private AudioSource footstepSource = null;
+    public AudioClip jumpClip = null;
+    private AudioSource jumpSource = null;
 
     [SpineEvent]
     public string footstepEventName = "Footstep";
@@ -53,8 +55,10 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         footstepSource = gameObject.AddComponent<AudioSource>();
-
         footstepSource.clip = footstepClip;
+
+        jumpSource = gameObject.AddComponent<AudioSource>();
+        jumpSource.clip = jumpClip;
 
         SkeletonAnimation skelAnim = gameObject.GetComponent<SkeletonAnimation>();
 
@@ -189,6 +193,10 @@ public class CharacterMovement : MonoBehaviour
             lastJumped = 0.0f;
 
             currentVelocity = new Vector2(currentVelocity.x, kJumpAmount * TimeManager.GetInstance().GetCurrentTimescale());
+
+            jumpSource.Stop();
+            jumpSource.pitch = GetRandomPitch(0.2f) * TimeManager.GetInstance().GetCurrentTimescale();
+            jumpSource.Play();
         }
     }
 
@@ -232,7 +240,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    static float GetRandomPitch(float maxOffset)
+    public static float GetRandomPitch(float maxOffset)
     {
         return 1f + Random.Range(-maxOffset, maxOffset);
     }

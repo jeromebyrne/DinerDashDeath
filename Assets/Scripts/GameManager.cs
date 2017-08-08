@@ -13,10 +13,25 @@ public class GameManager : MonoBehaviour {
     private PlayerAnimationController playerAnim = null;
     private CharacterMovement playerMovement = null;
 
+    public AudioClip shotgunClip = null;
+    private AudioSource shotgunSource = null;
+    public AudioClip shotgunCockClip = null;
+    private AudioSource shotgunCockSource = null;
+    public AudioClip shotgunReloadClip = null;
+    private AudioSource shotgunReloadSource = null;
+
     private Vector3 gunTargetRegularScale = new Vector3(0.75f, 0.75f, 1.0f);
-    private Vector3 gunTargetDoubleScale = new Vector3(1.0f, 1.0f, 1.0f);
-    private Color gunNotFocusedColor = new Color(1.0f, 0.7f, 0.0f);
-    private Color gunFocusedColor = new Color(1.0f, 0.0f, 0.0f);
+    private Vector3 gunTargetDoubleScale = new Vector3(1.25f, 1.25f, 1.0f);
+    private Color gunNotFocusedColor = new Color(1.0f, 0.0f, 0.0f);
+    private Color gunFocusedColor = new Color(0.0f, 1.0f, 0.0f);
+
+    float lastTimeFired = 9999.0f;
+
+    const float kTimeBeforeShots = 1.4f;
+    const float kTimeUntilReloadSFX = 0.3f;
+    bool shotReady = true;
+    bool playedCockedSfx = false;
+    bool playedReload = false;
 
     // Use this for initialization
     void Start ()
@@ -24,6 +39,14 @@ public class GameManager : MonoBehaviour {
         Cursor.visible = false;
         playerAnim = player.GetComponent<PlayerAnimationController>();
         playerMovement = player.GetComponent<CharacterMovement>();
+
+        shotgunSource = gameObject.AddComponent<AudioSource>();
+        shotgunSource.clip = shotgunClip;
+        shotgunCockSource = gameObject.AddComponent<AudioSource>();
+        shotgunCockSource.clip = shotgunCockClip;
+        shotgunReloadSource = gameObject.AddComponent<AudioSource>();
+        shotgunReloadSource.clip = shotgunReloadClip;
+
         SwitchLevel("Prefabs/level1");
     }
 
@@ -74,6 +97,40 @@ public class GameManager : MonoBehaviour {
                 }
             }
         }
+
+        if (!shotReady)
+        {
+            if (!playedReload && lastTimeFired >= kTimeUntilReloadSFX)
+            {
+                shotgunReloadSource.Stop();
+                shotgunReloadSource.pitch = CharacterMovement.GetRandomPitch(0.2f) * TimeManager.GetInstance().GetCurrentTimescale();
+                shotgunReloadSource.Play();
+                playedReload = true;
+            }
+
+            if (lastTimeFired >= kTimeBeforeShots)
+            {
+                shotReady = true;
+            }
+
+            gunTargetSprite.color = gunNotFocusedColor;
+            gunTarget.transform.localScale = gunTargetDoubleScale;
+        }
+        else
+        {
+            gunTargetSprite.color = gunFocusedColor;
+
+            if (Input.GetMouseButton(0))
+            {
+                gunTarget.transform.localScale = gunTargetRegularScale;
+            }
+            else
+            {
+                gunTarget.transform.localScale = gunTargetDoubleScale;
+            }
+        }
+
+        lastTimeFired += TimeManager.GetInstance().GetTimeDelta() * TimeManager.GetInstance().GetCurrentTimescale();
     }
 
     void UpdateGunAimingAndShooting(Spine.Bone gunBone)
@@ -106,13 +163,28 @@ public class GameManager : MonoBehaviour {
             playerAnim.aimDirection = -1.0f;
         }
 
-        if (Input.GetMouseButton(0))
+        if (shotReady && !playedCockedSfx && Input.GetMouseButton(0))
         {
-            gunTarget.transform.localScale = gunTargetRegularScale;
-            gunTargetSprite.color = gunFocusedColor;
+            playedCockedSfx = true;
+            shotgunCockSource.Stop();
+            shotgunCockSource.pitch = CharacterMovement.GetRandomPitch(0.2f) * TimeManager.GetInstance().GetCurrentTimescale();
+            shotgunCockSource.Play();
         }
-        else if (Input.GetMouseButtonUp(0))
+
+        if (Input.GetMouseButtonUp(0) && shotReady)
         {
+            lastTimeFired = 0.0f;
+            shotReady = false;
+            playedCockedSfx = false;
+            playedReload = false; 
+
+            // shotgun sfx 
+            {
+                shotgunSource.Stop();
+                shotgunSource.pitch = CharacterMovement.GetRandomPitch(0.2f) * TimeManager.GetInstance().GetCurrentTimescale();
+                shotgunSource.Play();
+            }
+
             var playerCollider = player.GetComponent<CapsuleCollider2D>();
             if (playerCollider)
             {
@@ -145,11 +217,5 @@ public class GameManager : MonoBehaviour {
                 playerCollider.enabled = true;
             }
         }
-        else
-        {
-            gunTarget.transform.localScale = gunTargetDoubleScale;
-            gunTargetSprite.color = gunNotFocusedColor;
-        }
-        
     }
 }
