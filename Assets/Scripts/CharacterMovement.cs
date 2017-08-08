@@ -24,10 +24,6 @@ public class CharacterMovement : MonoBehaviour
     float timeGrounded = 0.0f;
     float lastGrounded = 0.0f;
 
-    // TEMP vars
-    public Text velXText = null;
-    public Text velYText = null;
-
     public bool IsGrounded()
     {
         return isGrounded;
@@ -129,9 +125,6 @@ public class CharacterMovement : MonoBehaviour
                                                     gameObject.transform.position.z);
 
         ApplyResistance();
-
-        velXText.text = currentVelocity.x.ToString();
-        velYText.text = currentVelocity.y.ToString();
     }
 
     void ApplyResistance()
@@ -234,7 +227,7 @@ public class CharacterMovement : MonoBehaviour
         if (e.Data.Name == footstepEventName)
         {
             footstepSource.Stop();
-            footstepSource.pitch = GetRandomPitch(0.2f);
+            footstepSource.pitch = GetRandomPitch(0.2f) * TimeManager.GetInstance().GetCurrentTimescale();
             footstepSource.Play();
         }
     }

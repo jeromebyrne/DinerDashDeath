@@ -1,0 +1,146 @@
+
+customer.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+barb/barb_arm_1
+  rotate: true
+  xy: 428, 223
+  size: 44, 133
+  orig: 44, 133
+  offset: 0, 0
+  index: -1
+barb/barb_arm_2
+  rotate: false
+  xy: 182, 2
+  size: 41, 124
+  orig: 41, 124
+  offset: 0, 0
+  index: -1
+barb/barb_calf
+  rotate: false
+  xy: 73, 15
+  size: 107, 208
+  orig: 107, 208
+  offset: 0, 0
+  index: -1
+barb/barb_foot
+  rotate: false
+  xy: 305, 141
+  size: 125, 60
+  orig: 125, 60
+  offset: 0, 0
+  index: -1
+barb/barb_forearm_1
+  rotate: false
+  xy: 225, 23
+  size: 53, 103
+  orig: 53, 103
+  offset: 0, 0
+  index: -1
+barb/barb_forearm_2
+  rotate: true
+  xy: 563, 218
+  size: 49, 103
+  orig: 49, 103
+  offset: 0, 0
+  index: -1
+barb/barb_hand_1
+  rotate: false
+  xy: 662, 277
+  size: 49, 67
+  orig: 49, 67
+  offset: 0, 0
+  index: -1
+barb/barb_hand_2
+  rotate: false
+  xy: 970, 447
+  size: 52, 63
+  orig: 52, 63
+  offset: 0, 0
+  index: -1
+barb/barb_head
+  rotate: false
+  xy: 208, 286
+  size: 239, 224
+  orig: 239, 224
+  offset: 0, 0
+  index: -1
+barb/barb_leg
+  rotate: true
+  xy: 208, 203
+  size: 81, 218
+  orig: 81, 218
+  offset: 0, 0
+  index: -1
+barb/barb_torso
+  rotate: true
+  xy: 449, 346
+  size: 164, 274
+  orig: 164, 274
+  offset: 0, 0
+  index: -1
+inspector/inspector_arm
+  rotate: true
+  xy: 725, 335
+  size: 32, 110
+  orig: 32, 110
+  offset: 0, 0
+  index: -1
+inspector/inspector_calf
+  rotate: true
+  xy: 449, 269
+  size: 75, 211
+  orig: 75, 211
+  offset: 0, 0
+  index: -1
+inspector/inspector_foot
+  rotate: false
+  xy: 182, 128
+  size: 121, 73
+  orig: 121, 73
+  offset: 0, 0
+  index: -1
+inspector/inspector_forearm
+  rotate: true
+  xy: 837, 323
+  size: 44, 107
+  orig: 44, 107
+  offset: 0, 0
+  index: -1
+inspector/inspector_hand_1
+  rotate: false
+  xy: 970, 372
+  size: 49, 73
+  orig: 49, 73
+  offset: 0, 0
+  index: -1
+inspector/inspector_hand_2
+  rotate: true
+  xy: 713, 290
+  size: 43, 68
+  orig: 43, 68
+  offset: 0, 0
+  index: -1
+inspector/inspector_head
+  rotate: false
+  xy: 2, 225
+  size: 204, 285
+  orig: 204, 285
+  offset: 0, 0
+  index: -1
+inspector/inspector_leg
+  rotate: false
+  xy: 2, 2
+  size: 69, 221
+  orig: 69, 221
+  offset: 0, 0
+  index: -1
+inspector/inspector_torso
+  rotate: true
+  xy: 725, 369
+  size: 141, 243
+  orig: 141, 243
+  offset: 0, 0
+  index: -1
