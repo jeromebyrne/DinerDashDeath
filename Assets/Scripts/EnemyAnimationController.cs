@@ -7,9 +7,11 @@ using Spine.Unity;
 public class EnemyAnimationController : MonoBehaviour {
 
     CharacterMovement enemyMovement = null;
-    public SkeletonAnimation skeletonAnimation = null;
+    private SkeletonAnimation skeletonAnimation = null;
     private Vector3 startingScale = new Vector2(1.0f, 1.0f);
     private EnemyAI enemyAI = null;
+    private CharacterHealth characterHealth = null;
+    private bool hasPlayedDeathAnim = false;
 
     // Use this for initialization
     void Start () {
@@ -17,6 +19,7 @@ public class EnemyAnimationController : MonoBehaviour {
         enemyMovement = gameObject.GetComponent<CharacterMovement>();
         skeletonAnimation = gameObject.GetComponent<SkeletonAnimation>();
         enemyAI = gameObject.GetComponent<EnemyAI>();
+        characterHealth = gameObject.GetComponent<CharacterHealth>();
     }
 	
 	// Update is called once per frame
@@ -45,30 +48,43 @@ public class EnemyAnimationController : MonoBehaviour {
 
         if (trackEntry != null)
         {
-            if (enemyMovement.IsGrounded())
+            if (!characterHealth.IsDead())
             {
-                if (enemyAI.IsAttacking())
+                if (enemyMovement.IsGrounded())
                 {
-                    if (trackEntry.Animation.Name != "attack")
+                    if (enemyAI.IsAttacking())
                     {
-                        PlayAnimation("attack", true);
-                    }
-                }
-                else
-                {
-                    if (System.Math.Abs(enemyMovement.GetCurrentVelocityX()) > 0.0f)
-                    {
-                        if (trackEntry.Animation.Name != "run")
+                        if (trackEntry.Animation.Name != "attack")
                         {
-                            PlayAnimation("run", true);
+                            PlayAnimation("attack", true);
                         }
                     }
                     else
                     {
-                        if (trackEntry.Animation.Name != "idle")
+                        if (System.Math.Abs(enemyMovement.GetCurrentVelocityX()) > 0.0f)
                         {
-                            PlayAnimation("idle", true);
+                            if (trackEntry.Animation.Name != "run")
+                            {
+                                PlayAnimation("run", true);
+                            }
                         }
+                        else
+                        {
+                            if (trackEntry.Animation.Name != "idle")
+                            {
+                                PlayAnimation("idle", true);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (hasPlayedDeathAnim == false)
+                {
+                    if (trackEntry.Animation.Name != "death")
+                    {
+                        PlayAnimation("death", false);
                     }
                 }
             }

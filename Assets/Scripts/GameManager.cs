@@ -88,13 +88,14 @@ public class GameManager : MonoBehaviour {
         // gun bone rotation
         tempVec = Camera.main.WorldToScreenPoint(new Vector3(gunBone.WorldX + player.transform.position.x, gunBone.WorldY + (player.transform.position.y), 0));
         tempVec = Input.mousePosition - tempVec;
+        Vector3 direction = tempVec;
+        direction.Normalize();
         tempRot = Mathf.Atan2(tempVec.y, tempVec.x * player.transform.localScale.x) * Mathf.Rad2Deg;
         gunBone.Rotation = Mathf.Clamp(tempRot, LowerRotationBound, UpperRotationBound) - gunBone.parent.LocalToWorldRotation(gunBone.parent.rotation);
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = gunTarget.transform.position.z;
         gunTarget.transform.position = mousePos;
-        gunTarget.SetActive(true);
 
         if (mousePos.x >= player.transform.position.x)
         {
@@ -112,7 +113,40 @@ public class GameManager : MonoBehaviour {
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            // Fire weapon
+            var playerCollider = player.GetComponent<CapsuleCollider2D>();
+            if (playerCollider)
+            {
+                playerCollider.enabled = false;
+            }
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(gunBone.WorldX + player.transform.position.x,
+                                                            gunBone.WorldY + (player.transform.position.y)),
+                                                            direction);
+
+            if (hit.collider != null)
+            {
+                CharacterHealth characterHealth = hit.collider.gameObject.GetComponent<CharacterHealth>();
+
+                if (characterHealth)
+                {
+                    characterHealth.ChangeHealth(-100.0f);
+
+                    var bloodBurst = characterHealth.bloodBurst;
+
+                    if (bloodBurst)
+                    {
+                        bloodBurst.Stop();
+                        bloodBurst.transform.position = new Vector3(hit.point.x, hit.point.y, bloodBurst.transform.position.z);
+                        /*bloodBurst.transform.position = new Vector3(hit.collider.gameObject.transform.position.x, 
+                                                                    hit.collider.gameObject.transform.position.y, 
+                                                                    bloodBurst.transform.position.z);*/
+                        bloodBurst.Play();
+                    }
+                }
+            }
+            if (playerCollider)
+            {
+                playerCollider.enabled = true;
+            }
         }
         else
         {

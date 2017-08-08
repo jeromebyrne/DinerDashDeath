@@ -6,6 +6,7 @@ public class EnemyAI : MonoBehaviour {
 
     private GameObject playerTarget = null;
     private CharacterMovement characterMovement = null;
+    private CharacterHealth characterHealth = null;
     private const float kMoveSpeed = 1.5f;
     private const float kDistanceToStrikeSquared = 3.0f * 3.0f;
     private const float kDistanceToStopPursuingSquared = 25.0f * 25.0f;
@@ -21,12 +22,13 @@ public class EnemyAI : MonoBehaviour {
     {
         playerTarget = GameObject.Find("player");
         characterMovement = gameObject.GetComponent<CharacterMovement>();
-	}
+        characterHealth = gameObject.GetComponent<CharacterHealth>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-		if (playerTarget)
+		if (playerTarget && !characterHealth.IsDead())
         {
             Vector3 offset = gameObject.transform.position - playerTarget.transform.position;
             float distanceFromPlayerSquared = offset.sqrMagnitude;
