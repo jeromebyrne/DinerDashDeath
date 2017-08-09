@@ -134,7 +134,7 @@ public class EnemyAnimationController : MonoBehaviour {
         {
             timeSinceDeath += TimeManager.GetInstance().GetTimeDelta();
 
-            float timeUntilScale = 1.0f;
+            float timeUntilScale = 0.8f;
 
             if (deathAnimPlayed != "death2")
             {

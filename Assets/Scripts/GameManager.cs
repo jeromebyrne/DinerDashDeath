@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
     private AudioSource shotgunCockSource = null;
     public AudioClip shotgunReloadClip = null;
     private AudioSource shotgunReloadSource = null;
+    public AudioClip ricochetAudioClip = null;
+    private AudioSource ricochetAudioSource = null;
 
     public AudioClip bloodSplashClip = null;
     private AudioSource bloodSplashSource = null;
@@ -58,6 +60,8 @@ public class GameManager : MonoBehaviour {
         shotgunCockSource.clip = shotgunCockClip;
         shotgunReloadSource = gameObject.AddComponent<AudioSource>();
         shotgunReloadSource.clip = shotgunReloadClip;
+        ricochetAudioSource = gameObject.AddComponent<AudioSource>();
+        ricochetAudioSource.clip = ricochetAudioClip;
 
         bloodSplashSource = gameObject.AddComponent<AudioSource>();
         bloodSplashSource.clip = bloodSplashClip;
@@ -255,6 +259,10 @@ public class GameManager : MonoBehaviour {
                     groundSplash.Stop();
                     groundSplash.transform.position = new Vector3(hit.point.x, hit.point.y, groundSplash.transform.position.z);
                     groundSplash.Play();
+
+                    ricochetAudioSource.Stop();
+                    ricochetAudioSource.pitch = CharacterMovement.GetRandomPitch(0.2f) * TimeManager.GetInstance().GetCurrentTimescale();
+                    ricochetAudioSource.Play();
                 }
             }
             if (playerCollider)
