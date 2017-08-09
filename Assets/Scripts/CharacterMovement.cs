@@ -18,6 +18,7 @@ public class CharacterMovement : MonoBehaviour
     private AudioSource footstepSource = null;
     public AudioClip jumpClip = null;
     private AudioSource jumpSource = null;
+    private CharacterHealth characterHealth = null;
 
     [SpineEvent]
     public string footstepEventName = "Footstep";
@@ -54,6 +55,8 @@ public class CharacterMovement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        characterHealth = gameObject.GetComponent<CharacterHealth>();
+
         footstepSource = gameObject.AddComponent<AudioSource>();
         footstepSource.clip = footstepClip;
 
@@ -124,9 +127,12 @@ public class CharacterMovement : MonoBehaviour
             lastGrounded += timeDelta;
         }
 
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x + currentVelocity.x, 
-                                                    gameObject.transform.position.y + currentVelocity.y, 
+        // if (characterHealth == null || (characterHealth && !characterHealth.IsDead()))
+        //{
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x + currentVelocity.x,
+                                                    gameObject.transform.position.y + currentVelocity.y,
                                                     gameObject.transform.position.z);
+        //}
 
         ApplyResistance();
     }

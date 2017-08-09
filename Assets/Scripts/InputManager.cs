@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour {
 
     const string kHorizontalAxis = "Horizontal";
     const string kVerticalAxis = "Vertical";
     const float kPlayerMoveX = 2.0f;
+
+    bool slomoOn = false;
+    bool fastFloOn = false;
+
+    public Image slomoImage = null;
 
     public CharacterMovement playerMovement = null;
 
@@ -30,23 +36,42 @@ public class InputManager : MonoBehaviour {
             playerMovement.acceleratingX = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) ||
-            Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             playerMovement.Jump();
         }
         
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetMouseButtonUp(1))
         {
-            TimeManager.GetInstance().SetCurrentTimescale(0.1f);
+            slomoOn = !slomoOn;
+            fastFloOn = false;
+            
         }
-        else if (Input.GetKey(KeyCode.E))
+        else if (Input.GetMouseButtonUp(2))
+        {
+            fastFloOn = !fastFloOn;
+            slomoOn = false;
+        }
+
+        if (slomoOn)
+        {
+            TimeManager.GetInstance().SetCurrentTimescale(0.25f);
+            slomoImage.enabled = true;
+        }
+        else if (fastFloOn)
         {
             TimeManager.GetInstance().SetCurrentTimescale(2.0f);
+            slomoImage.enabled = false;
         }
         else
         {
             TimeManager.GetInstance().SetCurrentTimescale(1.0f);
+            slomoImage.enabled = false;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 }

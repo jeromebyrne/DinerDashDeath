@@ -12,8 +12,10 @@ public class EnemyAnimationController : MonoBehaviour {
     private Vector3 startingScale = new Vector2(1.0f, 1.0f);
     private EnemyAI enemyAI = null;
     private CharacterHealth characterHealth = null;
-    private bool hasPlayedDeathAnim = false;
+    public bool hasPlayedDeathAnim = false;
+    string deathAnimPlayed;
     public bool isInRagdollMode = false;
+    private float timeSinceDeath = 0.0f;
 
     // Use this for initialization
     void Start () {
@@ -29,9 +31,12 @@ public class EnemyAnimationController : MonoBehaviour {
 
         float animTimeScale = TimeManager.GetInstance().GetCurrentTimescale();
 
-        gameObject.transform.localScale = new Vector3(startingScale.x * enemyMovement.GetIntendedDirectionX(),
+        if (!hasPlayedDeathAnim)
+        {
+            gameObject.transform.localScale = new Vector3(startingScale.x * enemyMovement.GetIntendedDirectionX(),
                                                         startingScale.y,
                                                         startingScale.z);
+        }
 
         float percentSpeed = animTimeScale == 1.0f ? Mathf.Abs(enemyMovement.GetCurrentVelocityX() / enemyMovement.maxVelocity.x) : 1.0f;
 
@@ -56,9 +61,21 @@ public class EnemyAnimationController : MonoBehaviour {
                 {
                     if (enemyAI.IsAttacking())
                     {
-                        if (trackEntry.Animation.Name != "attack")
+                        if (trackEntry.Animation.Name != "attack" ||
+                            trackEntry.IsComplete)
                         {
-                            PlayAnimation("attack", true);
+                            PlayAnimation("attack", false);
+
+                            CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+
+                            if (cameraShake)
+                            {
+                                /*
+                                cameraShake.originalPos = Camera.main.transform.localPosition;
+                                cameraShake.shakeAmount = 0.9f;
+                                cameraShake.shakeDuration = 0.1f;
+                                */
+                            }
                         }
                     }
                     else
@@ -79,44 +96,68 @@ public class EnemyAnimationController : MonoBehaviour {
                         }
                     }
                 }
+                else if (enemyMovement.GetLastTimeGrounded() > 0.4f)
+                {
+                    if (trackEntry.Animation.Name != "fall")
+                    {
+                        PlayAnimation("fall", true);
+                    }
+                }
             }
             else
             {
                 if (hasPlayedDeathAnim == false)
                 {
-                    /*
-                    if (trackEntry.Animation.Name != "death")
+                    if (enemyMovement.IsGrounded())
                     {
-                        PlayAnimation("death", false);
+                        if (trackEntry.Animation.Name != "death")
+                        {
+                            PlayAnimation("death", false);
+                            deathAnimPlayed = "death";
+                            hasPlayedDeathAnim = true;
+                        }
                     }
                     else
                     {
-                        if (!isInRagdollMode && trackEntry.IsComplete)
+                        if (trackEntry.Animation.Name != "death2")
                         {
-                            var ragdoll = gameObject.GetComponent<SkeletonRagdoll2D>();
-                            if (ragdoll)
-                            {
-                                ragdoll.Apply();
-                            }
-
-                            isInRagdollMode = true;
+                            PlayAnimation("death2", false);
+                            deathAnimPlayed = "death2";
+                            hasPlayedDeathAnim = true;
                         }
                     }
-                    */
-
-                    if (!isInRagdollMode)
-                    {
-                        var ragdoll = gameObject.GetComponent<SkeletonRagdoll2D>();
-                        if (ragdoll)
-                        {
-                            ragdoll.Apply();
-                        }
-
-                        isInRagdollMode = true;
-                    }
-
-                    hasPlayedDeathAnim = true;
                 }
+            }
+        }
+
+        if (hasPlayedDeathAnim)
+        {
+            timeSinceDeath += TimeManager.GetInstance().GetTimeDelta();
+
+            float timeUntilScale = 1.0f;
+
+            if (deathAnimPlayed == "death2")
+            {
+                timeUntilScale = 0.6f;
+            }
+            if (timeSinceDeath > timeUntilScale)
+            {
+                float timeDelta = TimeManager.GetInstance().GetTimeDelta();
+                float dir = gameObject.transform.localScale.x >= 0.0f ? 1.0f : -1.0f;
+                float scale = Mathf.Abs(gameObject.transform.localScale.y ) - timeDelta * 3.0f;
+
+                if (scale <= 0.0f)
+                {
+                    Destroy(gameObject);
+
+                    GameManager.NumEnemiesAlive -= 1;
+                }
+                else
+                {
+                    gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x,
+                                                                scale,
+                                                                gameObject.transform.localScale.z);
+                } 
             }
         }
     }

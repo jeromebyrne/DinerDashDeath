@@ -5,50 +5,50 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 barb/barb_arm_1
-  rotate: true
-  xy: 428, 223
+  rotate: false
+  xy: 970, 312
   size: 44, 133
   orig: 44, 133
   offset: 0, 0
   index: -1
 barb/barb_arm_2
-  rotate: false
-  xy: 182, 2
+  rotate: true
+  xy: 712, 164
   size: 41, 124
   orig: 41, 124
   offset: 0, 0
   index: -1
 barb/barb_calf
   rotate: false
-  xy: 73, 15
+  xy: 262, 76
   size: 107, 208
   orig: 107, 208
   offset: 0, 0
   index: -1
 barb/barb_foot
-  rotate: false
-  xy: 305, 141
+  rotate: true
+  xy: 650, 136
   size: 125, 60
   orig: 125, 60
   offset: 0, 0
   index: -1
 barb/barb_forearm_1
-  rotate: false
-  xy: 225, 23
+  rotate: true
+  xy: 262, 21
   size: 53, 103
   orig: 53, 103
   offset: 0, 0
   index: -1
 barb/barb_forearm_2
   rotate: true
-  xy: 563, 218
+  xy: 367, 22
   size: 49, 103
   orig: 49, 103
   offset: 0, 0
   index: -1
 barb/barb_hand_1
-  rotate: false
-  xy: 662, 277
+  rotate: true
+  xy: 581, 24
   size: 49, 67
   orig: 49, 67
   offset: 0, 0
@@ -69,7 +69,7 @@ barb/barb_head
   index: -1
 barb/barb_leg
   rotate: true
-  xy: 208, 203
+  xy: 449, 263
   size: 81, 218
   orig: 81, 218
   offset: 0, 0
@@ -81,44 +81,65 @@ barb/barb_torso
   orig: 164, 274
   offset: 0, 0
   index: -1
+gore/gore_head
+  rotate: true
+  xy: 2, 10
+  size: 213, 187
+  orig: 213, 187
+  offset: 0, 0
+  index: -1
+gore/gore_splat
+  rotate: true
+  xy: 448, 169
+  size: 92, 200
+  orig: 92, 200
+  offset: 0, 0
+  index: -1
+gore/gore_torso
+  rotate: true
+  xy: 448, 75
+  size: 92, 200
+  orig: 92, 200
+  offset: 0, 0
+  index: -1
 inspector/inspector_arm
   rotate: true
-  xy: 725, 335
+  xy: 712, 130
   size: 32, 110
   orig: 32, 110
   offset: 0, 0
   index: -1
 inspector/inspector_calf
-  rotate: true
-  xy: 449, 269
+  rotate: false
+  xy: 371, 73
   size: 75, 211
   orig: 75, 211
   offset: 0, 0
   index: -1
 inspector/inspector_foot
   rotate: false
-  xy: 182, 128
+  xy: 712, 207
   size: 121, 73
   orig: 121, 73
   offset: 0, 0
   index: -1
 inspector/inspector_forearm
   rotate: true
-  xy: 837, 323
+  xy: 472, 29
   size: 44, 107
   orig: 44, 107
   offset: 0, 0
   index: -1
 inspector/inspector_hand_1
   rotate: false
-  xy: 970, 372
+  xy: 835, 207
   size: 49, 73
   orig: 49, 73
   offset: 0, 0
   index: -1
 inspector/inspector_hand_2
-  rotate: true
-  xy: 713, 290
+  rotate: false
+  xy: 692, 60
   size: 43, 68
   orig: 43, 68
   offset: 0, 0
@@ -132,7 +153,7 @@ inspector/inspector_head
   index: -1
 inspector/inspector_leg
   rotate: false
-  xy: 2, 2
+  xy: 191, 2
   size: 69, 221
   orig: 69, 221
   offset: 0, 0
@@ -142,5 +163,68 @@ inspector/inspector_torso
   xy: 725, 369
   size: 141, 243
   orig: 141, 243
+  offset: 0, 0
+  index: -1
+rosie/rosie_arm
+  rotate: false
+  xy: 737, 60
+  size: 19, 68
+  orig: 19, 68
+  offset: 0, 0
+  index: -1
+rosie/rosie_calf
+  rotate: false
+  xy: 669, 278
+  size: 32, 66
+  orig: 32, 66
+  offset: 0, 0
+  index: -1
+rosie/rosie_foot
+  rotate: false
+  xy: 208, 248
+  size: 37, 36
+  orig: 37, 36
+  offset: 0, 0
+  index: -1
+rosie/rosie_forearm
+  rotate: true
+  xy: 692, 45
+  size: 13, 64
+  orig: 13, 64
+  offset: 0, 0
+  index: -1
+rosie/rosie_hand_1
+  rotate: true
+  xy: 472, 2
+  size: 25, 40
+  orig: 25, 40
+  offset: 0, 0
+  index: -1
+rosie/rosie_hand_2
+  rotate: false
+  xy: 838, 167
+  size: 31, 38
+  orig: 31, 38
+  offset: 0, 0
+  index: -1
+rosie/rosie_head
+  rotate: true
+  xy: 891, 285
+  size: 82, 77
+  orig: 82, 77
+  offset: 0, 0
+  index: -1
+rosie/rosie_leg
+  rotate: false
+  xy: 650, 30
+  size: 40, 104
+  orig: 40, 104
+  offset: 0, 0
+  index: -1
+rosie/rosie_torso
+  rotate: true
+  xy: 725, 282
+  size: 85, 164
+  orig: 85, 164
   offset: 0, 0
   index: -1

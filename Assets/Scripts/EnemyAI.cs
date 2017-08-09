@@ -9,7 +9,7 @@ public class EnemyAI : MonoBehaviour {
     private CharacterHealth characterHealth = null;
     private const float kMoveSpeed = 1.5f;
     private const float kDistanceToStrikeSquared = 3.0f * 3.0f;
-    private const float kDistanceToStopPursuingSquared = 25.0f * 25.0f;
+    private const float kDistanceToStopPursuingSquared = 100.0f * 100.0f;
     private bool isAttacking = false;
 
     public bool IsAttacking()

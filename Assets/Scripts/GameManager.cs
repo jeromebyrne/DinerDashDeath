@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour {
     public SpriteRenderer gunTargetSprite = null;
     private PlayerAnimationController playerAnim = null;
     private CharacterMovement playerMovement = null;
+
+    private float timeUntilFirstSpawn = 15.0f;
 
     public AudioClip shotgunClip = null;
     private AudioSource shotgunSource = null;
@@ -31,11 +34,15 @@ public class GameManager : MonoBehaviour {
 
     float lastTimeFired = 9999.0f;
 
-    const float kTimeBeforeShots = 1.4f;
-    const float kTimeUntilReloadSFX = 0.3f;
+    const float kTimeBeforeShots = 1.0f;
+    const float kTimeUntilReloadSFX = 0.4f;
     bool shotReady = true;
     bool playedCockedSfx = false;
     bool playedReload = false;
+
+    float lastTimeSpawned = 0;
+
+    public static int NumEnemiesAlive = 0;
 
     // Use this for initialization
     void Start ()
@@ -56,11 +63,15 @@ public class GameManager : MonoBehaviour {
 
         cameraShake = Camera.main.GetComponent<CameraShake>();
 
+        Random.InitState(987657894);
+
         SwitchLevel("Prefabs/level1");
     }
 
     public void SwitchLevel(string levelName)
     {
+        NumEnemiesAlive = 0;
+
         foreach (Transform child in levelParent.transform)
         {
             GameObject.Destroy(child.gameObject);
@@ -92,6 +103,11 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
+        if (timeUntilFirstSpawn > 0.0f)
+        {
+            timeUntilFirstSpawn -= TimeManager.GetInstance().GetTimeDelta();
+        }
+
         if (player)
         {
             var animCtrl = player.GetComponent<PlayerAnimationController>();
@@ -139,7 +155,9 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        lastTimeFired += TimeManager.GetInstance().GetTimeDelta() * TimeManager.GetInstance().GetCurrentTimescale();
+        lastTimeFired += TimeManager.GetInstance().GetTimeDelta();
+
+        UpdateSpawning();
     }
 
     void UpdateGunAimingAndShooting(Spine.Bone gunBone)
@@ -264,6 +282,49 @@ public class GameManager : MonoBehaviour {
             {
                 cameraShake.shakeAmount = 0.2f;
                 cameraShake.shakeDuration = 0.1f;
+            }
+        }
+    }
+
+    void UpdateSpawning()
+    {
+        if (timeUntilFirstSpawn > 0.0f)
+        {
+            return;
+        }
+
+        if (NumEnemiesAlive < 3)
+        {
+            lastTimeSpawned += TimeManager.GetInstance().GetTimeDelta();
+
+            if (lastTimeSpawned > 3.0f)
+            {
+                string prefab = "Prefabs/inspector";
+                
+                float randVal = Random.value;
+
+                if (randVal > 0.67f)
+                {
+                    prefab = "Prefabs/barb";
+                }
+                else if (randVal > 0.34f)
+                {
+                    prefab = "Prefabs/rosie";
+                }
+
+                GameObject enemyObj = GameObject.Instantiate(Resources.Load(prefab)) as GameObject;
+
+                if (enemyObj)
+                {
+                    enemyObj.transform.position = new Vector3(player.transform.position.x + (playerAnim.aimDirection * (Random.value * 20.0f)),
+                                                                player.transform.position.y  + 12.0f,
+                                                                player.transform.position.z);
+                }
+                
+
+                lastTimeSpawned = 0.0f;
+
+                NumEnemiesAlive++;
             }
         }
     }
