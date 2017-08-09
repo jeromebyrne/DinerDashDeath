@@ -60,7 +60,7 @@ public class InputManager : MonoBehaviour {
         }
         else if (fastFloOn)
         {
-            TimeManager.GetInstance().SetCurrentTimescale(2.0f);
+            TimeManager.GetInstance().SetCurrentTimescale(1.75f);
             slomoImage.enabled = false;
         }
         else

@@ -127,7 +127,7 @@ public class CharacterMovement : MonoBehaviour
             lastGrounded += timeDelta;
         }
 
-        // if (characterHealth == null || (characterHealth && !characterHealth.IsDead()))
+        //if (characterHealth == null || (characterHealth && !characterHealth.IsDead()))
         //{
             gameObject.transform.position = new Vector3(gameObject.transform.position.x + currentVelocity.x,
                                                     gameObject.transform.position.y + currentVelocity.y,
@@ -175,6 +175,12 @@ public class CharacterMovement : MonoBehaviour
         else
         {
             float currentTimeScale = TimeManager.GetInstance().GetCurrentTimescale();
+
+            if (currentTimeScale > 1.0f)
+            {
+                // just jacking this in to prevent sinking through ground
+                currentTimeScale = 0.75f;
+            }
 
             newVelocity.y = currentVelocity.y - (resistance.y * timeDelta * currentTimeScale);
         }

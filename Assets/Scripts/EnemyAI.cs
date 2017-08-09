@@ -28,7 +28,7 @@ public class EnemyAI : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if (playerTarget && !characterHealth.IsDead())
+		if (playerTarget && !characterHealth.IsDead() && characterMovement.IsGrounded())
         {
             Vector3 offset = gameObject.transform.position - playerTarget.transform.position;
             float distanceFromPlayerSquared = offset.sqrMagnitude;

@@ -136,28 +136,33 @@ public class EnemyAnimationController : MonoBehaviour {
 
             float timeUntilScale = 1.0f;
 
-            if (deathAnimPlayed == "death2")
+            if (deathAnimPlayed != "death2")
             {
-                timeUntilScale = 0.6f;
-            }
-            if (timeSinceDeath > timeUntilScale)
-            {
-                float timeDelta = TimeManager.GetInstance().GetTimeDelta();
-                float dir = gameObject.transform.localScale.x >= 0.0f ? 1.0f : -1.0f;
-                float scale = Mathf.Abs(gameObject.transform.localScale.y ) - timeDelta * 3.0f;
-
-                if (scale <= 0.0f)
+                if (timeSinceDeath > timeUntilScale)
                 {
-                    Destroy(gameObject);
+                    float timeDelta = TimeManager.GetInstance().GetTimeDelta();
+                    float dir = gameObject.transform.localScale.x >= 0.0f ? 1.0f : -1.0f;
+                    float scale = Mathf.Abs(gameObject.transform.localScale.y) - timeDelta * 3.0f;
 
-                    GameManager.NumEnemiesAlive -= 1;
+                    if (scale <= 0.0f)
+                    {
+                        Destroy(gameObject);
+
+                        GameManager.NumEnemiesAlive -= 1;
+                    }
+                    else
+                    {
+                        gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x,
+                                                                    -scale,
+                                                                    gameObject.transform.localScale.z);
+                    }
                 }
-                else
-                {
-                    gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x,
-                                                                scale,
-                                                                gameObject.transform.localScale.z);
-                } 
+            }
+            else if (timeSinceDeath > 0.3f)
+            {
+                Destroy(gameObject);
+
+                GameManager.NumEnemiesAlive -= 1;
             }
         }
     }

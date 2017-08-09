@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     public SpriteRenderer gunTargetSprite = null;
     private PlayerAnimationController playerAnim = null;
     private CharacterMovement playerMovement = null;
+    public ParticleSystem groundSplash = null;
 
     private float timeUntilFirstSpawn = 15.0f;
 
@@ -241,22 +242,6 @@ public class GameManager : MonoBehaviour {
                     if (bloodBurst)
                     {
                         bloodBurst.Stop();
-
-                        // particle velocity
-                        {
-                            //ParticleSystem.Particle[] p = new ParticleSystem.Particle[bloodBurst.particleCount + 1];
-                            //int l = bloodBurst.GetParticles(p);
-
-                            //int i = 0;
-                            //while (i < l)
-                            //{
-                            //    p[i].velocity = new Vector3(direction.x * 20.0f, direction.y * 20.0f/*p[i].remainingLifetime / p[i].startLifetime * 10F*/, 0);
-                            //    i++;
-                            //}
-
-                            //bloodBurst.SetParticles(p, l);
-                        }
-
                         bloodBurst.transform.position = new Vector3(hit.point.x, hit.point.y, bloodBurst.transform.position.z);
                         bloodBurst.Play();
                     }
@@ -264,6 +249,12 @@ public class GameManager : MonoBehaviour {
                     bloodSplashSource.Stop();
                     bloodSplashSource.pitch = CharacterMovement.GetRandomPitch(0.2f) * TimeManager.GetInstance().GetCurrentTimescale();
                     bloodSplashSource.PlayDelayed(0.05f);
+                }
+                else if (hit.collider.gameObject.tag == "Ground")
+                {
+                    groundSplash.Stop();
+                    groundSplash.transform.position = new Vector3(hit.point.x, hit.point.y, groundSplash.transform.position.z);
+                    groundSplash.Play();
                 }
             }
             if (playerCollider)
@@ -316,7 +307,13 @@ public class GameManager : MonoBehaviour {
 
                 if (enemyObj)
                 {
-                    enemyObj.transform.position = new Vector3(player.transform.position.x + (playerAnim.aimDirection * (Random.value * 20.0f)),
+                    float distanceX = player.transform.position.x + (playerAnim.aimDirection * (Random.value * 20.0f));
+                    if (distanceX < 8.0f)
+                    {
+                        distanceX = 8.0f;
+                    }
+
+                    enemyObj.transform.position = new Vector3(distanceX,
                                                                 player.transform.position.y  + 12.0f,
                                                                 player.transform.position.z);
                 }

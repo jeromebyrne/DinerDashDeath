@@ -23,6 +23,7 @@ public class CharacterHealth : MonoBehaviour
         if (bloodBurstObj)
         {
             bloodBurst = bloodBurstObj.GetComponent<ParticleSystem>();
+            //bloodBurst.transform.SetParent(gameObject.transform);
         }
 
         if (bloodBurst)
